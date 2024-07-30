@@ -1,4 +1,4 @@
-Claro, aquí tienes un ejemplo de un archivo `README.md` que explica cómo ejecutar tu proyecto Tcl/Tk:
+
 
 # Proyecto de Ejemplo en Tcl/Tk
 
