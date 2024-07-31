@@ -103,7 +103,8 @@ Revisa los mensajes de error en la terminal para identificar y corregir cualquie
 ## Recursos
 
 - [Documentación de Tcl](https://www.tcl.tk/doc/)
-- [Tutorial de Tcl/Tk](https://www.tcl.tk/man/tcl8.6/tutorial/tcltutorial.html)
+- [Tutorial 1 de Tcl/Tk](https://www.tcl.tk/man/tcl8.6/tutorial/tcltutorial.html)
+- [Tutorial 2 de Tcl/Tk]([https://www.tcl.tk/man/tcl8.6/tutorial/tcltutorial.html](https://www.tutorialspoint.com/tcl-tk/tcl_tk_quick_guide.htm))
 
 
 Este archivo `README.md` proporciona una guía clara sobre cómo ejecutar tu proyecto en Tcl/Tk. Asegúrate de ajustar las rutas y nombres de archivos según la estructura específica de tu proyecto.
