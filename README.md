@@ -55,6 +55,23 @@ Si ves este error, significa que Tcl/Tk no está instalado o no está en tu PATH
 
 Revisa los mensajes de error en la terminal para identificar y corregir cualquier problema en el script.
 
+## Widgets Comunes
+
+- `button`: Botón.
+- `label`: Etiqueta.
+- `entry`: Campo de entrada de texto.
+- `text`: Área de texto.
+- `checkbutton`: Botón de verificación.
+- `radiobutton`: Botón de opción.
+- `listbox`: Lista.
+- `frame`: Organiza otros widgets (IMPORTANTE).
+- `canvas`: Superficie de dibujo para formas y gráficos.
+- `menus`: Menús.
+- `ttk::progressbar`: Barra de progreso.
+- `scale`: Control deslizante.
+- `ttk::spinbox`: Permite seleccionar un valor de un rango usando flechas arriba/abajo.
+- `ttk::notebook`: Organiza múltiples páginas o pestañas.
+
 
 ## Opciones de Bind
 
@@ -83,25 +100,6 @@ Revisa los mensajes de error en la terminal para identificar y corregir cualquie
 
 ### Eventos de Listbox
 - `<<ListboxSelect>>`: Cuando un elemento en el listbox es seleccionado.
-
-## Widgets Comunes
-
-- `button`: Botón.
-- `label`: Etiqueta.
-- `entry`: Campo de entrada de texto.
-- `text`: Área de texto.
-- `checkbutton`: Botón de verificación.
-- `radiobutton`: Botón de opción.
-- `listbox`: Lista.
-- `frame`: Organiza otros widgets (IMPORTANTE).
-- `canvas`: Superficie de dibujo para formas y gráficos.
-- `menus`: Menús.
-- `ttk::progressbar`: Barra de progreso.
-- `scale`: Control deslizante.
-- `ttk::spinbox`: Permite seleccionar un valor de un rango usando flechas arriba/abajo.
-- `ttk::notebook`: Organiza múltiples páginas o pestañas.
-
-
 ## Recursos
 
 - [Documentación de Tcl](https://www.tcl.tk/doc/)
