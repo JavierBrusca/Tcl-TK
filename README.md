@@ -55,6 +55,53 @@ Si ves este error, significa que Tcl/Tk no está instalado o no está en tu PATH
 
 Revisa los mensajes de error en la terminal para identificar y corregir cualquier problema en el script.
 
+
+## Opciones de Bind
+
+### Eventos del Ratón
+- `<ButtonPress-1>` o `<Button-1>`: Presión del botón izquierdo del ratón.
+- `<ButtonRelease-1>`: Liberación del botón izquierdo del ratón.
+- `<Double-Button-1>`: Doble clic con el botón izquierdo del ratón.
+- `<Triple-Button-1>`: Triple clic con el botón izquierdo del ratón.
+- `<Motion>`: Movimiento del ratón con un botón presionado (arrastrar).
+
+### Eventos del Teclado
+- `<KeyPress>` o `<Key>`: Presión de cualquier tecla.
+- `<KeyRelease>`: Liberación de cualquier tecla.
+- `<KeyPress-A>`: Presión de la tecla 'A'.
+- `<Control-KeyPress-C>`: Presión simultánea de Control y C.
+
+### Eventos de Foco
+- `<FocusIn>`: Cuando el widget gana foco.
+- `<FocusOut>`: Cuando el widget pierde foco.
+
+### Eventos de Ventana
+- `<Configure>`: Cuando la ventana es redimensionada o movida.
+- `<Destroy>`: Cuando un widget es destruido.
+- `<Map>`: Cuando un widget es mostrado en la pantalla.
+- `<Unmap>`: Cuando un widget es ocultado de la pantalla.
+
+### Eventos de Listbox
+- `<<ListboxSelect>>`: Cuando un elemento en el listbox es seleccionado.
+
+## Widgets Comunes
+
+- `button`: Botón.
+- `label`: Etiqueta.
+- `entry`: Campo de entrada de texto.
+- `text`: Área de texto.
+- `checkbutton`: Botón de verificación.
+- `radiobutton`: Botón de opción.
+- `listbox`: Lista.
+- `frame`: Organiza otros widgets (IMPORTANTE).
+- `canvas`: Superficie de dibujo para formas y gráficos.
+- `menus`: Menús.
+- `ttk::progressbar`: Barra de progreso.
+- `scale`: Control deslizante.
+- `ttk::spinbox`: Permite seleccionar un valor de un rango usando flechas arriba/abajo.
+- `ttk::notebook`: Organiza múltiples páginas o pestañas.
+
+
 ## Recursos
 
 - [Documentación de Tcl](https://www.tcl.tk/doc/)
