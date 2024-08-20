@@ -1,7 +1,7 @@
 #!/usr/bin/wish
 
 
-###########################################################################
+##############################################################################
 #
 # PROJECT: EJERCICIOS DE PRACTICA
 #
@@ -11,45 +11,38 @@
 #
 # AUTHOR: JAVIER BRUSCA ALVAREZ (jbrusca)
 #
-###########################################################################
+##############################################################################
 
 frame .kernel
 pack .kernel -side top
 
 lappend auto_path .
 
-#   1. Cambia el nombre a la ventana  (wm)
 wm title . "Welcome to Fruit Store"
 wm geometry . 30x10
 
-#   2. Crea un label top (label)
 label .label1 -text " Welcome! " -padx 0
 pack .label1 -side top
 
 set window .frame
 global window
 
-#   Crea un frame con subframe para que funcione correcto los entrys y demás
 p_frame $window left
 p_subframe $window.text left
 
-#   3. Crea un entry left (entry)
+# un entry en el lado izquierdo del multiple selector
 # p_new_entry $window.text "Fruit : " 10 value text $window.text_entry left 
 # setTooltip $window.text "Select a Fruit."
 # focus $window.text 
+
 # si quisiera tener dos entrys
 # p_subframe $window.text2 left
 # p_new_entry $window.text2 "Fruit : " 3 $window.text2 text2 $window.text2_entry left 
 
-#   4. Crea un botón right (button)
 p_subframe $window.button right
 p_new_button $window.button.run1 "Delete" [ list P_CLEAN_ALL_LIST $window.multiple.list.busy.frame.id ] 
 pack $window.button.run1 -side top -padx 10 -pady 10
 
-
-#   6. Haz que el entry salte el foco cuando llegue al máximo de su longitud (bind)
-#   Realmente esto lo hace solo por como esta creado el p_new_entry. Si el valor máximo
-#   es 10, entonces salta de foco al siguiente elemento 
 
 #   no se porque no me va en el entry 
 bind $window.text <KeyRelease> {
@@ -79,8 +72,8 @@ array set fruits {
 
 #   Iteración sobre el array de frutas para agregarlas a la lista multiple 
 #   free -> unselected    busy -> selected
-foreach fruit [array names fruits] {
-    set fruit_value $fruits($fruit)
+foreach key [array names fruits] {
+    set fruit_value $fruits($key)
     if {[string length $fruit_value] > 0} {
         $window.multiple.list.free.frame.id insert end $fruit_value
     }
@@ -94,14 +87,10 @@ foreach fruit [array names fruits] {
 #    }
 #}
 
-#   11. Botón para "comprar" las frutas
+#   boton insertado en el subframe anterior para que salgan juntos
 p_new_button $window.button.run2 "Buy" P_SELECT_FRUITS
 pack $window.button.run2 
 
-
-
-
-##############################################################################
 
 
 ##############################################################################
@@ -140,7 +129,7 @@ proc P_SELECT_FRUITS { } {
             }
         }
 
-        #   comprobar que el array se esta completando correctamente
+        #   comprobar que el array se esta completando correctamente con las frutas seleccionadas
         # foreach key [array names buy_fruits] {
         #       set value $buy_fruits($key)
         #       puts "Clave:  $key , Fruta: $value"
@@ -159,7 +148,7 @@ proc P_SELECT_FRUITS { } {
         p_subframe $window.combobox top
 
         #   Crea un combobox
-        combobox $window.combobox.combo1 -textvariable comboValue
+        combobox $window.combobox.combo1 -textvariable comboValue -bg lightgreen
         pack $window.combobox.combo1 -padx 20 -pady 20
         
         
@@ -242,6 +231,14 @@ proc P_SELECT_AMOUNT { fruitsCount } {
             bell
             return
         } else {
+
+            label $window.label -text "Success! Next one"
+            pack $window.label 
+
+            after 2000 {
+                destroy $window.label
+            }
+
             set finalValues($comboValue) $total
         }
     } 
@@ -326,12 +323,9 @@ proc P_FINISH_PAYMENT { total } {
 
 ##############################################################################
 #
-# Procedure to clean selected fruits
+# Procedure to clean all selected fruits
 #
 proc P_CLEAN_ALL_LIST {list} {
-        
     $list delete 0 end
-    
 }
-
 ################################################################################
