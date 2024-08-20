@@ -43,21 +43,9 @@ p_subframe $window.text left
 
 #   4. Crea un botón right (button)
 p_subframe $window.button right
-p_new_button $window.button.run1 "Delete" deleteEntry
+p_new_button $window.button.run1 "Delete" [ list p_clean_all_list $window.multiple.list.busy.frame.id ] 
 pack $window.button.run1 -side top -padx 10 -pady 10
 
-#   5. Haz que pulsando el botón se borre el texto que se ponga en el entry (procedure)
-proc deleteEntry {} {
-    global value
-    global window
-    #   el textvar del entry actua como un array, por eso hay que acceder de esta forma
-    # set valor $value(text)
-    # puts "El valor actual es: $value(text)"
-
-    #   mejor borrarlo con la funcion de delete, no con un string vacio (pero no me sale)
-    set value(text) ""
-    p_clean_all_list $window.multiple.list.busy.frame.id
-}
 
 #   6. Haz que el entry salte el foco cuando llegue al máximo de su longitud (bind)
 #   Realmente esto lo hace solo por como esta creado el p_new_entry. Si el valor máximo
@@ -65,7 +53,7 @@ proc deleteEntry {} {
 
 #   no se porque no me va en el entry 
 bind $window.text <KeyRelease> {
-    puts ola
+    # puts ola
     highlightListboxItem
 }
 
@@ -110,6 +98,10 @@ foreach fruit [array names fruits] {
 p_new_button $window.button.run2 "Buy" P_SELECT_FRUITS
 pack $window.button.run2 
 
+
+
+
+##############################################################################
 
 
 ##############################################################################
@@ -237,7 +229,7 @@ proc P_SELECT_AMOUNT { fruitsCount } {
         }
 
         set total [expr $price * $cantidad]
-        puts "Total : $price * $cantidad = $total"
+        # puts "Total : $price * $cantidad = $total"
 
         if {[info exists finalValues($comboValue)]} {
             set finishWindowError [toplevel .finishWindowError]
@@ -258,10 +250,10 @@ proc P_SELECT_AMOUNT { fruitsCount } {
     if { $fruitsCount <= $totalprices} {
         set total 0
         foreach key [ array name finalValues ] {
-            puts $finalValues($key)
+            # puts $finalValues($key)
             set total [ expr $finalValues($key) + $total ]
         }
-        puts $total
+        # puts $total
 
             
         destroy $window
@@ -337,11 +329,9 @@ proc P_FINISH_PAYMENT { total } {
 # Procedure to clean selected fruits
 #
 proc p_clean_all_list {list} {
-
-set size [$list size]
-    for { set i 0 } {$i < $size} {incr i} {
-        $list delete $i
-    }
+   
+    $list delete 0 end
+    
 }
 
 ################################################################################
