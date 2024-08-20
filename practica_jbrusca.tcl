@@ -1,6 +1,5 @@
 #!/usr/bin/wish
 
-## SOLO VA IR EN EL SERVIDOR PORQUE NO TENGO LOS WIDGETS EN LOCAL
 
 ###########################################################################
 #
@@ -108,7 +107,7 @@ foreach fruit [array names fruits] {
 #}
 
 #   11. Botón para "comprar" las frutas
-p_new_button $window.button.run2 "Buy" buyFruits
+p_new_button $window.button.run2 "Buy" P_SELECT_FRUITS
 pack $window.button.run2 
 
 
@@ -117,7 +116,7 @@ pack $window.button.run2
 #
 # First button to buy all selected fruits
 #
-proc buyFruits {} {
+proc P_SELECT_FRUITS { } {
     global fruits
     global window
 
@@ -181,7 +180,7 @@ proc buyFruits {} {
 
         set fruitsCount [array size buy_fruits]
         p_subframe $window.button top
-        p_new_button $window.button.run1 "Buy" [list finishPayment $fruitsCount ] 
+        p_new_button $window.button.run1 "Buy" [list P_SELECT_AMOUNT $fruitsCount ] 
         pack $window.button.run1 -side top -padx 10 -pady 10
 
         array set finalValues []
@@ -195,7 +194,7 @@ proc buyFruits {} {
 # Second button to select the amount of each fruit
 #
 
-proc finishPayment { fruitsCount } {
+proc P_SELECT_AMOUNT { fruitsCount } {
     global comboValue
     global cantidadValue
     global finalValues
@@ -236,7 +235,7 @@ proc finishPayment { fruitsCount } {
             bell 
             return
         }
-        
+
         set total [expr $price * $cantidad]
         puts "Total : $price * $cantidad = $total"
 
@@ -249,7 +248,7 @@ proc finishPayment { fruitsCount } {
             p_new_button $finishWindowError.close "Error" "destroy $finishWindowError"
             pack $finishWindowError.close -padx 20 -pady 20
             bell
-
+            return
         } else {
             set finalValues($comboValue) $total
         }
@@ -279,7 +278,7 @@ proc finishPayment { fruitsCount } {
         p_subframe $window.total top
         p_new_entry $window.total "Your money: " 10 cantidadUserFinal cantidadUser $window.total_entry left
 
-        p_new_button $window.total.buttonpay "Pay" [list P_LAST_STEP $total]
+        p_new_button $window.total.buttonpay "Pay" [list P_FINISH_PAYMENT $total]
         pack $window.total.buttonpay -padx 20 -pady 20
 
     }
@@ -293,7 +292,7 @@ proc finishPayment { fruitsCount } {
 #
 # Third and last button to accept the total payment
 #
-proc P_LAST_STEP { total } {
+proc P_FINISH_PAYMENT { total } {
     global cantidadUserFinal
     global window
     
@@ -317,13 +316,16 @@ proc P_LAST_STEP { total } {
         wm geometry . 400x200
         wm title . " Confirmation "
 
-        label .label3 -text " See you soon! " -padx 0
+        set dif [ expr $pay - $total ]
+
+        label .label3 -text " Here you have $dif " -pady 10
+        pack .label3        
 
         p_frame $window top
         p_subframe $window.total top
         
-        p_new_button $window.total.close "Bye!" "destroy ." 
-        pack $window.total.close -padx 20 -pady 20
+        p_new_button $window.total.close " Bye! " "destroy ." 
+        pack $window.total.close 
 
     }
 }
@@ -334,13 +336,12 @@ proc P_LAST_STEP { total } {
 #
 # Procedure to clean selected fruits
 #
-    proc p_clean_all_list {list} {
+proc p_clean_all_list {list} {
 
-    set size [$list size]
-        for { set i 0 } {$i < $size} {incr i} {
-            $list delete $i
-        }
-
+set size [$list size]
+    for { set i 0 } {$i < $size} {incr i} {
+        $list delete $i
     }
+}
 
 ################################################################################
