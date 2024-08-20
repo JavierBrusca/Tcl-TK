@@ -43,7 +43,7 @@ p_subframe $window.text left
 
 #   4. Crea un botón right (button)
 p_subframe $window.button right
-p_new_button $window.button.run1 "Delete" [ list p_clean_all_list $window.multiple.list.busy.frame.id ] 
+p_new_button $window.button.run1 "Delete" [ list P_CLEAN_ALL_LIST $window.multiple.list.busy.frame.id ] 
 pack $window.button.run1 -side top -padx 10 -pady 10
 
 
@@ -328,8 +328,8 @@ proc P_FINISH_PAYMENT { total } {
 #
 # Procedure to clean selected fruits
 #
-proc p_clean_all_list {list} {
-   
+proc P_CLEAN_ALL_LIST {list} {
+        
     $list delete 0 end
     
 }
