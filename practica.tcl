@@ -26,7 +26,8 @@ proc deleteEntry {} {
     global text1 
     # puts $text1
     if { [ info exists text1 ] && $text1 != "" } {
-        set text1 ""
+        #mejor borrarlo con la funcion de delete, no con un string vacio
+        set text1 ""  
     } else {
         bell
     }
@@ -85,7 +86,7 @@ proc highlightListboxItem {} {
 button .button_frame.comprar -text "Buy" -command buyfruits
 pack .button_frame.comprar -side top -padx 20 -pady 10
 
-#   12. Procedimiento para manejar la compra de frutas (puedes definirlo según tus necesidades)
+#   12. Procedimiento para manejar la compra de frutas
 proc buyfruits {} {
     global text1
     global fruitPrices
@@ -162,8 +163,8 @@ proc buyfruits {} {
 
     # procedure para calcular si el dinero recibido es mayor al total 
     proc finishPayment { entry total } {
-        set number [ $entry get ]
-        set diff [ expr $number - $total]
+        set user_value [ $entry get ]
+        set diff [ expr $user_value - $total]
 
         if { $diff >= 0 } {
             set finishWindow [toplevel .finishWindow]
@@ -171,7 +172,7 @@ proc buyfruits {} {
             label $finishWindow.label1 -text "Here you have, $diff"
             pack $finishWindow.label1 
 
-            button $finishWindow.close -text "Pay me" -command exit
+            button $finishWindow.close -text "Have a nice day!" -command exit
             pack $finishWindow.close -padx 20 -pady 20
         } else {
             set finishWindowError [toplevel .finishWindowError]
@@ -179,7 +180,7 @@ proc buyfruits {} {
             label $finishWindowError.label1 -text "Dont play with me"
             pack $finishWindowError.label1        
 
-            button $finishWindowError.close -text "Pay me" -command "destroy $finishWindowError"
+            button $finishWindowError.close -text "Pay me!" -command "destroy $finishWindowError"
             pack $finishWindowError.close -padx 20 -pady 20
 
         }
