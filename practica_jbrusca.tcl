@@ -13,13 +13,9 @@
 #
 ##############################################################################
 
-frame .kernel
-pack .kernel -side top
-
 lappend auto_path .
 
 wm title . "Welcome to Fruit Store"
-wm geometry . 30x10
 
 label .label1 -text " Welcome! " -padx 0
 pack .label1 -side top
@@ -29,6 +25,13 @@ global window
 
 p_frame $window left
 p_subframe $window.text left
+
+canvas $window.imagen -height 100 -width 460
+image create photo indra -file flag.gif
+$window.imagen create image 231 50 -image indra
+
+pack $window.imagen
+
 
 # un entry en el lado izquierdo del multiple selector
 # p_new_entry $window.text "Fruit : " 10 value text $window.text_entry left 
@@ -138,7 +141,7 @@ proc P_SELECT_FRUITS { } {
         destroy $window
         destroy .label1
 
-        wm geometry . 350x200
+        wm geometry . 700x300
         wm title . "Checkout"
 
         label .label2 -text " Choose one fruit and tell me how much do you want " -padx 0
@@ -156,13 +159,12 @@ proc P_SELECT_FRUITS { } {
             combobox_add $window.combobox.combo1 $buy_fruits($key)
         }
 
-        p_subframe $window.cantidad left
-        p_new_entry $window.cantidad "How much? : " 10 cantidadValue cantidad $window.cantidad_entry left 
+        p_subframe $window.cantidad top
+        p_new_entry $window.cantidad "How much? : " 10 cantidadValue cantidad $window.cantidad_entry top 
 
         set fruitsCount [array size buy_fruits]
-        p_subframe $window.button top
-        p_new_button $window.button.run1 "Buy" [list P_SELECT_AMOUNT $fruitsCount ] 
-        pack $window.button.run1 -side top -padx 10 -pady 10
+        p_new_button $window.cantidad.run1 "Buy" [list P_SELECT_AMOUNT $fruitsCount ] 
+        pack $window.cantidad.run1 -side top -padx 20 -pady 20
 
         array set finalValues []
     }
@@ -180,9 +182,15 @@ proc P_SELECT_AMOUNT { fruitsCount } {
     global cantidadValue
     global finalValues
     global window
-    set cantidad $cantidadValue(cantidad)    
+
+    if { [string is double $cantidadValue(cantidad) ]} {
+        set cantidad $cantidadValue(cantidad)    
+    } else {
+        bell
+        return
+    }
     set totalprices [ array size finalValues ] 
-    set totalprices [ expr $totalprices + 1]
+    set totalprices [format "%.2f" [ expr $totalprices + 1 ]]
 
     # puts "Comobovalue $comboValue" 
     # puts "Cantida $cantidad" 
@@ -217,7 +225,7 @@ proc P_SELECT_AMOUNT { fruitsCount } {
             return
         }
 
-        set total [expr $price * $cantidad]
+        set total [format "%.2f" [expr $price * $cantidad]]
         # puts "Total : $price * $cantidad = $total"
 
         if {[info exists finalValues($comboValue)]} {
@@ -232,11 +240,11 @@ proc P_SELECT_AMOUNT { fruitsCount } {
             return
         } else {
 
-            label $window.label -text "Success! Next one"
-            pack $window.label 
+            label $window.cantidad.text -text "Success! Next one" -background lightgreen
+            pack $window.cantidad.text
 
-            after 2000 {
-                destroy $window.label
+            after 1500 {
+                destroy $window.cantidad.text
             }
 
             set finalValues($comboValue) $total
@@ -248,7 +256,7 @@ proc P_SELECT_AMOUNT { fruitsCount } {
         set total 0
         foreach key [ array name finalValues ] {
             # puts $finalValues($key)
-            set total [ expr $finalValues($key) + $total ]
+            set total [format "%.2f" [ expr $finalValues($key) + $total ]]
         }
         # puts $total
 
@@ -256,7 +264,7 @@ proc P_SELECT_AMOUNT { fruitsCount } {
         destroy $window
         destroy .label2
 
-        wm geometry . 400x200
+        wm geometry . 700x300
         wm title . " Confirmation "
         
         label .label3 -text " It will be $total Euros thank you! " -padx 0
@@ -265,7 +273,7 @@ proc P_SELECT_AMOUNT { fruitsCount } {
  
         p_frame $window top
         p_subframe $window.total top
-        p_new_entry $window.total "Your money: " 10 cantidadUserFinal cantidadUser $window.total_entry left
+        p_new_entry $window.total "Your money: " 10 cantidadUserFinal cantidadUser $window.total_entry top
 
         p_new_button $window.total.buttonpay "Pay" [list P_FINISH_PAYMENT $total]
         pack $window.total.buttonpay -padx 20 -pady 20
@@ -285,7 +293,13 @@ proc P_FINISH_PAYMENT { total } {
     global cantidadUserFinal
     global window
     
-    set pay $cantidadUserFinal(cantidadUser)    
+    if { [string is double $cantidadUserFinal(cantidadUser) ]} {
+        set pay $cantidadUserFinal(cantidadUser)    
+    } else {
+        bell
+        return
+    }
+
 
     if { $pay < $total } {
         set finishWindowError [toplevel .finishWindowError]
@@ -302,10 +316,10 @@ proc P_FINISH_PAYMENT { total } {
         destroy $window
         destroy .label3
 
-        wm geometry . 400x200
+        wm geometry . 700x300
         wm title . " Confirmation "
 
-        set dif [ expr $pay - $total ]
+        set dif [format "%.2f" [expr $pay - $total ] ]
 
         label .label3 -text " Here you have $dif " -pady 10
         pack .label3        
